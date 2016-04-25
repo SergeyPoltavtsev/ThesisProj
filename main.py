@@ -1,6 +1,6 @@
 import random
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 #import scipy.misc
 import os
 #from datetime import datetime as dt

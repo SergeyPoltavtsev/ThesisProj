@@ -2,8 +2,11 @@ import numpy as np
 import wave
 import pylab
 import os
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
-   
+
 def get_wav_info(file_path):
     wav = wave.open(file_path, 'r')
     frames = wav.readframes(-1)
@@ -14,8 +17,8 @@ def get_wav_info(file_path):
 
 def graph_spectrogram(file_path, out_img_file):
     sound_info, frame_rate = get_wav_info(file_path)
-    fig = pylab.figure(num=None, figsize=(19, 12), edgecolor = None, frameon=False)
-    plt.subplot(111)
+    fig = plt.figure(num=None, figsize=(19, 12), edgecolor = None, frameon=False)
+    #plt.subplot(111)
     Pxx, freqs, bins, im = plt.specgram(sound_info, Fs=frame_rate)#, cmap=plt.cm.gist_heat)
     im.axes.axis('off')
     im.axes.get_xaxis().set_visible(False)
@@ -23,6 +26,13 @@ def graph_spectrogram(file_path, out_img_file):
     #im.frameon = False
     plt.axis((0,max(bins),0,max(freqs)))
     
+    #fig.savefig(out_img_file, bbox_inches='tight', transparent=True, pad_inches=0, edgecolor='w')
     plt.savefig(out_img_file, bbox_inches='tight', transparent=True, pad_inches=0, edgecolor='w')
     plt.clf()
     plt.close()
+    
+    
+#    fig = plt.figure()
+#ax = fig.add_subplot(111)
+#ax.plot(range(10))
+#fig.savefig('temp.png')
