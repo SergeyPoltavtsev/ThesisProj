@@ -16,15 +16,15 @@ def Flac2Wav(flac_file, wav_path):
 
 def cutIntoChunks(file_path, output_folder):
     output_folder = output_folder + "/"
-    chunkDuration = 1; # 1 sec
-    chankStep = 5./10; # 500 ms
+    chunkDuration = 2./100; # 20 ms
+    chankStep =  1./100; # 10 ms
     wav = wave.open(file_path, 'r')
 
     frameRate = wav.getframerate()
     nChannels = wav.getnchannels()
     sampWidth = wav.getsampwidth()
     
-    numSamplesPerChunk = chunkDuration*frameRate;
+    numSamplesPerChunk = int(chunkDuration*frameRate);
     numSamplesPerStep = int(chankStep*frameRate);
     
     totalNumSamples = wav.getnframes();
@@ -32,7 +32,7 @@ def cutIntoChunks(file_path, output_folder):
     chunkCnt = 0;
     startLoc = 0;
     
-    while startLoc + numSamplesPerChunk < totalNumSamples:
+    while startLoc + numSamplesPerChunk <= totalNumSamples:
         endLoc = min(startLoc + numSamplesPerChunk - 1,totalNumSamples)
         wav.setpos(startLoc)
         chunk_frames = wav.readframes(endLoc-startLoc)
@@ -49,4 +49,4 @@ def cutIntoChunks(file_path, output_folder):
         chunkCnt += 1
     
     wav.close()
-    os.remove(file_path)
+    #os.remove(file_path)

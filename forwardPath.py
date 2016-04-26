@@ -19,6 +19,10 @@ def spectrumToArrays(device, params, img_path, output_folder, file_name):
             output_path = output_folder + layers_names[i] + "/"
             if not os.path.exists(output_path):
                 os.makedirs(output_path)
+            dirr = os.path.dirname(output_path + file_name)
+            if not os.path.exists(dirr):
+                os.makedirs(dirr)
+
             np.save(output_path + file_name, content_image_y_val[i])   
 
     #cleanUp
@@ -42,4 +46,31 @@ def getPath(output_folder, file_name, chunk):
       
     name = file_name.split('.', 1)[0] + "_" + chunk.split('.', 1)[0]
     
+    return (output_path, name)
+
+def getPathWithPhoneme(output_folder, file_name, chunk):
+    split1 = file_name.split('.', 1)
+    file_name = split1[0]
+
+    phoneme = file_name.split('/')[4]
+
+    output_path = output_folder
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
+    name = phoneme + "/" +  os.path.basename(file_name).split('.', 1)[0] + "_" + chunk.split('.', 1)[0]
+
+    return (output_path, name)
+
+def getPhonemsPath(output_folder, file_path):
+    name = os.path.basename(file_path)
+    name = name.split('.',1)[0]
+
+    phonem = file_path.split('/')[4]
+
+
+    output_path = output_folder + phonem + "/"
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
     return (output_path, name)
