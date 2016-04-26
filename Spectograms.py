@@ -26,6 +26,7 @@ def graph_spectrogram(file_path, out_img_file):
     #im.frameon = False
     plt.axis((0,max(bins),0,max(freqs)))
     
+    #fig.savefig(out_img_file, bbox_inches='tight', transparent=True, pad_inches=0, edgecolor='w')
     plt.savefig(out_img_file, bbox_inches='tight', transparent=True, pad_inches=0, edgecolor='w')
     
     #fig.savefig(out_img_file, bbox_inches='tight', transparent=True, pad_inches=0, edgecolor='w')

@@ -1,8 +1,5 @@
 import random
 import numpy as np
-#import matplotlib
-#matplotlib.use('Agg')
-#import matplotlib.pyplot as plt
 #import scipy.misc
 import os
 #from datetime import datetime as dt
