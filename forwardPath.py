@@ -62,6 +62,17 @@ def getPathWithPhoneme(output_folder, file_name, chunk):
 
     return (output_path, name)
 
+def getPathTIMITSPeakerAndPhoneme(output_folder, speaker, phoneme, file_name, chunk):
+    file_name = file_name.split('.', 1)[0]
+
+    output_path = output_folder + "/"
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
+    name = speaker + "/" + phoneme + "/" +  file_name + "_" + chunk.split('.', 1)[0]
+
+    return (output_path, name)
+
 def getPhonemsPath(output_folder, file_path):
     name = os.path.basename(file_path)
     name = name.split('.',1)[0]

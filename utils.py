@@ -64,3 +64,20 @@ def cleanFolder(folder):
         except Exception as e:
             print(e)
             
+def parcePhonemeFile(path):
+    #convert extention to open phonemes file
+    if not path.endswith(".PHN"):
+        path = path.split('.')[0] + ".PHN"
+        
+    phonemes = []
+    with open(path) as f:
+        lines = f.readlines()
+        for line in lines:
+            #print line
+            line = line.split('\n')[0]
+            line_parts = line.split(' ')
+            #print line_parts[2]
+            phoneme = (line_parts[0], line_parts[1], line_parts[2])
+            phonemes.append(phoneme)
+            #print line
+    return phonemes
