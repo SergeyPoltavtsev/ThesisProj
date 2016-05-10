@@ -2,9 +2,33 @@ import wave
 import pylab
 import audiotools
 import os
+import numpy as np
 
 name_counter = 0
 frames_number = 100
+
+def SeparateNistOnHeaderAndData(input_file):
+    """
+    Header begins with a label of the form NISTxx where xx is a version code followed by the number of bytes in the header.
+
+    sample_rate - sample rate in Hz
+    sample_n_bytes - number of bytes in each sample
+    sample_count - number of samples in file
+    sample_byte_format - byte order
+    sample_coding - speech coding eg pcm,  tex2html_wrap_inline19966 law, shortpack
+    channels_interleaved - for 2 channel data only
+    """
+    #TODO: parce header to get all values
+    with open(input_file, 'rb') as pcmfile:
+        Nist_version = pcmfile.readline()
+        HeaderBytes = int(pcmfile.readline())
+            #closing file. Now we know header size
+
+    with open(input_file, 'rb') as pcmfile:
+        header = pcmfile.read(HeaderBytes)
+        data = pcmfile.read()
+        
+    return (header,data)
 
 def PCM2Wav(input_file, output_path):
     output_path = output_path + "/"
@@ -15,12 +39,11 @@ def PCM2Wav(input_file, output_path):
     wav_name = file_name.replace(".WAV", ".wav")
     wav_file= output_path + wav_name
     
-    with open(input_file, 'rb') as pcmfile:
-        pcmdata = pcmfile.read()
-    
+    header, data = SeparateNistOnHeaderAndData(input_file)
+
     wavfile = wave.open(wav_file, 'wb')
     wavfile.setparams((1, 2, 16000, 0, 'NONE', 'NONE')) #mono, 16bit, 16000 Hz
-    wavfile.writeframes(pcmdata)
+    wavfile.writeframes(data)
     wavfile.close()
     #audiotools.open(input_file).convert(wav_file, audiotools.WaveAudio)
     return wav_file
