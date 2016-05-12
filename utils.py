@@ -20,11 +20,16 @@ def read_image(path):
     img = scipy.misc.imread(path,  mode='RGB')
     # Resize if ratio is specified
     img = scipy.misc.imresize(img, (224, 224))
-    img = img.astype(np.float32)
-    img = img[None, ...]
-    # Subtract the image mean
-    img = sub_mean(img)
+    img = process_image(img)
     return img
+
+def process_image(arr):
+    arr = arr.astype(np.float32)
+    arr = arr[None, ...]
+    # Subtract the image mean
+    arr = sub_mean(arr)
+    return arr
+    
 
 def save_image(im, iteration, out_dir):
     img = im.copy()

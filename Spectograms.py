@@ -7,6 +7,7 @@ import os
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
 import math as math
+from PIL import Image
 plt.switch_backend('agg')
    
 # def get_wav_info(file_path):
@@ -21,6 +22,9 @@ plt.switch_backend('agg')
 #     frames = frames / (max_nb_bit + 1.0) 
     
 #     return frames, frame_rate
+
+windowSize = 256
+frameStep = 64
 
 def get_wav_info(file_path):
     wav = wave.open(file_path, 'r')
@@ -55,7 +59,18 @@ def graph_spectrogram(file_path, out_img_file):
     plt.close()
     
 
-def CreateSpectogram(waveform, windowSize = 256, frameStep = 128):
+def SpectogramToImage(file_path, out_img_file):
+    waveform, frame_rate = get_wav_info(file_path)
+    spect = CreateSpectogram(waveform)
+    magSpec, freqs, times = SpectrogramForDisplay(spect, frame_rate, frameStep)
+    A = np.real(magSpec)
+    normalized, minEl, maxEl = normalize(A)
+    normedRGB = toRGB(normalized)
+    img = Image.fromarray(normedRGB)
+    img.save(out_img_file)
+    return normedRGB, minEl, maxEl
+
+def CreateSpectogram(waveform, windowSize = 256, frameStep = 64):
     fftSize = 2*windowSize
     fftB = int(math.floor(windowSize/2))
     fftE = int(fftB + windowSize)
@@ -99,7 +114,7 @@ def normalize(arr):
     return normalized, minEl, maxEl
 
 def toRGB(arr):
-    gray = (normalized*255.).astype('uint8')
+    gray = (arr*255.).astype('uint8')
     res = np.repeat(gray[:, :, np.newaxis], 3, axis=2)
     return res
 
@@ -120,3 +135,16 @@ def backwardDisplaySpectogram(spect,originalFromImage, windowSize ):
     negFreqRange = np.arange(windowSize,fftSize);
     backwardSpec[negFreqRange,:] = np.flipud(originalFromImage[freqRange,:])
     return backwardSpec
+
+def SaveRGB(arr, path):
+    img = Image.fromarray(arr)
+    img.save(path)
+    return img
+
+def ReadRGB(path):
+    im = Image.open(path, 'r')
+    height, width = im.size
+    pixel_values = list(im.getdata())
+    pixel_values = np.array(pixel_values).reshape((width, height, 3))
+    pixel_values = np.uint8(pixel_values)
+    return pixel_values
