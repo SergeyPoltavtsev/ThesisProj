@@ -19,7 +19,7 @@ model_weights_path = '/home/ubuntu/vgg'
 device="/gpu:0"
 
 
-path_to_params = "/home/ubuntu/parametersTIMIT/"
+path_to_params = "/home/ubuntu/parametersTIMIT10/"
 
 
 #PHONEMS

@@ -22,7 +22,7 @@ path_to_params = "/home/ubuntu/parametersTIMIT/"
 
 
 #PHONEMS
-path_to_sound = "/home/ubuntu/TIMIT/timit/train"
+path_to_sound = "/home/ubuntu/TIMIT100/timit/train"
 
 
 #temp
@@ -36,7 +36,7 @@ temp_image_to_process = "/home/ubuntu/ThesisProj/processing.jpg"
 params = np.load(model_weights_path).item()
 
 #PHONEMS
-pathes = ut.reverseFolder(path_to_sound, ".wav")
+pathes = ut.reverseFolder(path_to_sound, ".WAV")
 
 
 for path in pathes:
