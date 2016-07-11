@@ -19,11 +19,11 @@ model_weights_path = '/home/ubuntu/vgg'
 device="/gpu:0"
 
 
-path_to_params = "/home/ubuntu/parametersTIMIT/"
+path_to_params = "/home/ubuntu/parametersTIMIT10POOL2/"
 
 
 #PHONEMS
-path_to_sound = "/home/ubuntu/TIMIT10/timit/train"
+path_to_sound = "/home/ubuntu/TIMIT10POOL1/timit/train"
 
 
 #temp

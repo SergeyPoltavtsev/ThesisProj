@@ -4,7 +4,7 @@ import os
 import utils as ut
 import models as models
 
-layers_names = ['pool5', 'fc7']
+layers_names = ['pool2']
 
 def spectrumToArrays(device, params, img_path, output_folder, file_name):
     g = tf.Graph()
